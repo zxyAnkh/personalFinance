@@ -47,7 +47,10 @@ public class FrmSearch extends JDialog {
 				tblData[i][1]=sdf.format(records.get(i).getPayDate());
 				tblData[i][2]=records.get(i).getPaymentTypeId();
 				tblData[i][3]=records.get(i).getPayMoney();
-				tblData[i][4]=records.get(i).getPayOrIncome();
+				if(records.get(i).getPayOrIncome()==true)
+					tblData[i][4]="收入";
+				else
+					tblData[i][4]="支出";
 				tblData[i][5]=records.get(i).getPS();
 			}
 			

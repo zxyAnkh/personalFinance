@@ -14,11 +14,13 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collection;
 
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JRootPane;
 import javax.swing.JTextField;
 
 import cn.edu.zucc.personalfinance.control.UserManager;
@@ -32,9 +34,12 @@ import cn.edu.zucc.personalfinance.util.DbException;
 public class FrmLogin extends JDialog implements ActionListener {
 	private JPanel toolBar = new JPanel();
 	private JPanel workPane = new JPanel();
-	private Button btnLogin = new Button("Login");
+	private JButton btnLogin = new JButton("Login");
 	private Button btnCancel = new Button("Exit");
 	private Button btnRegister = new Button("Register");
+	
+	private JRootPane jrp = new JRootPane();
+	
 	
 	private JLabel labelUser = new JLabel("用户：");
 	private JLabel labelPwd = new JLabel("密码：");
@@ -53,6 +58,8 @@ public class FrmLogin extends JDialog implements ActionListener {
 		workPane.add(edtUserId);
 		workPane.add(labelPwd);
 		workPane.add(edtPwd);
+		jrp=getRootPane();
+		jrp.setDefaultButton(btnLogin);
 		this.getContentPane().add(workPane, BorderLayout.CENTER);
 		this.setSize(320, 140);
 		// 屏幕居中显示

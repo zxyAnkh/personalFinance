@@ -124,7 +124,7 @@ public class FrmMain extends JFrame implements ActionListener {
 		}
 	}
 
-	public FrmMain() {
+	public FrmMain() throws BaseException {
 
 		this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		this.setTitle("个人收支管理系统");
@@ -164,13 +164,13 @@ public class FrmMain extends JFrame implements ActionListener {
 		
 		try {
 			if(PaymentManager.Statics_Time(str).compareTo(new BigDecimal(0))==-1){
-				JOptionPane.showMessageDialog(null, "本月收入"+PaymentManager.Statics_Time(str)+"元！", "消费提示", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "本月支出"+PaymentManager.Statics_Time(str)+"元！", "消费提示", JOptionPane.ERROR_MESSAGE);
 			}
 			else if(PaymentManager.Statics_Time(str).compareTo(new BigDecimal(0))==0){
-				JOptionPane.showMessageDialog(null, "本月无消费！", "消费提示", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "本月无收支！", "消费提示", JOptionPane.ERROR_MESSAGE);
 			}
-			else{
-				JOptionPane.showMessageDialog(null, "本月支出"+PaymentManager.Statics_Time(str)+"元！", "消费提示", JOptionPane.ERROR_MESSAGE);
+			else if(PaymentManager.Statics_Time(str).compareTo(new BigDecimal(0))==1){
+				JOptionPane.showMessageDialog(null, "本月收入"+PaymentManager.Statics_Time(str)+"元！", "消费提示", JOptionPane.ERROR_MESSAGE);
 			}
 			
 		} catch (HeadlessException | BaseException e1) {
@@ -199,7 +199,7 @@ public class FrmMain extends JFrame implements ActionListener {
 		this.reloadTypeTable(UserManager.currentUser.getUserId());
 		// 状态栏
 		statusBar.setLayout(new FlowLayout(FlowLayout.LEFT));
-		JLabel label = new JLabel("您好!" + UserManager.currentUser.getUserName()+",账户余额为"+UserManager.currentUser.getUserRemainingSum()+"元。");
+		JLabel label = new JLabel("您好!" + UserManager.currentUser.getUserName()+"，账户余额为"+UserManager.loadUser(UserManager.currentUser.getUserId()).getUserRemainingSum()+"元！");
 		statusBar.add(label);
 		this.getContentPane().add(statusBar, BorderLayout.SOUTH);
 		this.addWindowListener(new WindowAdapter() {
@@ -282,7 +282,7 @@ public class FrmMain extends JFrame implements ActionListener {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					// TODO Auto-generated method stub
-					
+					FrmMain.this.statusBar.repaint();
 				}
 				
 			});

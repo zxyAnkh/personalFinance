@@ -325,17 +325,17 @@ public class PaymentManager {
 					+ "%' and userid='"+userId+"' order by paydate";
 			java.sql.Statement st = conn.createStatement();
 			java.sql.ResultSet rs = st.executeQuery(sql);
-			if(!rs.next()) throw new BusinessException("");
+			if(!rs.next()) return new BigDecimal(0);
 			if(rs.getBoolean(2)==true){
 			BigDecimal sum=rs.getBigDecimal(1);
-			BigDecimal x = rs.getBigDecimal(1);
+	//		BigDecimal x = rs.getBigDecimal(1);
 			while (rs.next()) {
 				if(rs.getBoolean(2)==true)
 				    sum=sum.add(rs.getBigDecimal(1));
 				else
 					 sum=sum.subtract(rs.getBigDecimal(1));
 			}
-			return sum.subtract(x).abs();
+			return sum.abs();
 			}
 			else{
 				BigDecimal sum=rs.getBigDecimal(1);
@@ -346,7 +346,7 @@ public class PaymentManager {
 					else
 						 sum=sum.subtract(rs.getBigDecimal(1));
 				}
-				return sum.add(x).abs();
+				return sum.abs();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
